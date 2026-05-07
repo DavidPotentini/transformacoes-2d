@@ -29,12 +29,17 @@ Sem argumento o programa imprime erro de uso e encerra.
 
 ## Comandos disponíveis
 
-| Comando        | Efeito                                  |
-|----------------|-----------------------------------------|
-| `t <dx> <dy>`  | Translação por (dx, dy)                 |
-| `r <graus>`    | Rotação (anti-horário)                  |
-| `s <s>`        | Escala uniforme (mesmo fator em x e y)  |
-| `d`            | Redesenha a tela                        |
-| `l <arquivo>`  | Carrega outro objeto                    |
-| `h`            | Exibe a ajuda                           |
-| `q`            | Sai                                     |
+Pressione ENTER após cada comando.
+
+| Comando        | Efeito                                          |
+|----------------|-------------------------------------------------|
+| `w`            | Transladar +y (passo 1.0)                       |
+| `s`            | Transladar -y (passo 1.0)                       |
+| `a`            | Transladar -x (passo 1.0)                       |
+| `d`            | Transladar +x (passo 1.0)                       |
+| `/`            | Rotacionar +15° (anti-horário)                  |
+| `+`            | Escalar uniformemente por 1.10                  |
+| `-`            | Escalar uniformemente por 1/1.10                |
+| `l <arquivo>`  | Carrega outro objeto                            |
+| `h`            | Exibe a ajuda                                   |
+| `q`            | Sai                                             |

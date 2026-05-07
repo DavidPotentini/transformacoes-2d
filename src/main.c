@@ -13,12 +13,16 @@
  * para aplicar transformacoes 2D e redesenhar o objeto no terminal.
  */
 
+/* Passos default dos atalhos rapidos */
+#define PASSO_TRANSLACAO 1.0f
+#define PASSO_ROTACAO    15.0f
+#define FATOR_ESCALA     1.1f
+
 static void mostrar_ajuda(void) {
-    printf("\n=== Comandos ===\n");
-    printf("  t <dx> <dy>                    Translacao por (dx, dy)\n");
-    printf("  r <graus>                      Rotacao (anti-horario)\n");
-    printf("  s <s>                          Escala (uniforme em x e y)\n");
-    printf("  d                              Redesenhar\n");
+    printf("\n=== Comandos === (pressione ENTER apos cada comando)\n");
+    printf("  w / a / s / d                  Transladar +y / -x / -y / +x (passo %.1f)\n", PASSO_TRANSLACAO);
+    printf("  /                              Rotacionar +%.0f graus (anti-horario)\n", PASSO_ROTACAO);
+    printf("  + / -                          Escalar *%.2f / /%.2f\n", FATOR_ESCALA, FATOR_ESCALA);
     printf("  l <arquivo>                    Carregar outro objeto\n");
     printf("  h                              Esta ajuda\n");
     printf("  q                              Sair\n\n");
@@ -88,31 +92,32 @@ int main(int argc, char **argv) {
         if (sscanf(linha_cmd, " %c", &cmd) != 1) continue;
 
         switch (cmd) {
-            case 't': case 'T': {
-                float dx, dy;
-                if (sscanf(linha_cmd, " %*c %f %f", &dx, &dy) == 2) {
-                    transladar(obj, dx, dy);
-                    redesenhar = 1;
-                } else printf("Uso: t <dx> <dy>\n");
+            case 'w': case 'W':
+                transladar(obj, 0.0f, PASSO_TRANSLACAO);
+                redesenhar = 1;
                 break;
-            }
-            case 'r': case 'R': {
-                float ang;
-                if (sscanf(linha_cmd, " %*c %f", &ang) == 1) {
-                    rotacionar(obj, ang);
-                    redesenhar = 1;
-                } else printf("Uso: r <graus>\n");
+            case 's': case 'S':
+                transladar(obj, 0.0f, -PASSO_TRANSLACAO);
+                redesenhar = 1;
                 break;
-            }
-            case 's': case 'S': {
-                float s;
-                if (sscanf(linha_cmd, " %*c %f", &s) == 1) {
-                    escalar(obj, s, s);
-                    redesenhar = 1;
-                } else printf("Uso: s <s>\n");
+            case 'a': case 'A':
+                transladar(obj, -PASSO_TRANSLACAO, 0.0f);
+                redesenhar = 1;
                 break;
-            }
             case 'd': case 'D':
+                transladar(obj, PASSO_TRANSLACAO, 0.0f);
+                redesenhar = 1;
+                break;
+            case '/':
+                rotacionar(obj, PASSO_ROTACAO);
+                redesenhar = 1;
+                break;
+            case '+': case '=':
+                escalar(obj, FATOR_ESCALA, FATOR_ESCALA);
+                redesenhar = 1;
+                break;
+            case '-': case '_':
+                escalar(obj, 1.0f / FATOR_ESCALA, 1.0f / FATOR_ESCALA);
                 redesenhar = 1;
                 break;
             case 'l': case 'L': {
